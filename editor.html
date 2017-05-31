@@ -1,0 +1,175 @@
+<html>
+<head>
+<style>
+table{
+    border: 1px solid black;
+    table-layout: fixed;
+    width: 200px;
+	
+}
+
+th, td {
+    border: 1px solid black;
+    width: 100px;
+	height: 100px;
+	font-size: 50px;
+	text-align: center;
+}
+</style>
+</head>
+<body>
+
+
+<table>
+<tr>
+<td id='0-0' onClick='funk(this)'></td>
+<td id='0-1' onClick='funk(this)'></td>
+<td id='0-2' onClick='funk(this)'></td>
+<td id='0-3' onClick='funk(this)'></td>
+<td id='0-4' onClick='funk(this)'></td>
+<td id='0-5' onClick='funk(this)'></td>
+<td id='0-6' onClick='funk(this)'></td>
+<td id='0-7' onClick='funk(this)'></td>
+</tr>
+<tr>
+<td id='1-0' onClick='funk(this)'></td>
+<td id='1-1' onClick='funk(this)'></td>
+<td id='1-2' onClick='funk(this)'></td>
+<td id='1-3' onClick='funk(this)'></td>
+<td id='1-4' onClick='funk(this)'></td>
+<td id='1-5' onClick='funk(this)'></td>
+<td id='1-6' onClick='funk(this)'></td>
+<td id='1-7' onClick='funk(this)'></td>
+</tr>
+<tr>
+<td id='2-0' onClick='funk(this)'></td>
+<td id='2-1' onClick='funk(this)'></td>
+<td id='2-2' onClick='funk(this)'></td>
+<td id='2-3' onClick='funk(this)'></td>
+<td id='2-4' onClick='funk(this)'></td>
+<td id='2-5' onClick='funk(this)'></td>
+<td id='2-6' onClick='funk(this)'></td>
+<td id='2-7' onClick='funk(this)'></td>
+</tr>
+<tr>
+<td id='3-0' onClick='funk(this)'></td>
+<td id='3-1' onClick='funk(this)'></td>
+<td id='3-2' onClick='funk(this)'></td>
+<td id='3-3' onClick='funk(this)'></td>
+<td id='3-4' onClick='funk(this)'></td>
+<td id='3-5' onClick='funk(this)'></td>
+<td id='3-6' onClick='funk(this)'></td>
+<td id='3-7' onClick='funk(this)'></td>
+</tr>
+<tr>
+<td id='4-0' onClick='funk(this)'></td>
+<td id='4-1' onClick='funk(this)'></td>
+<td id='4-2' onClick='funk(this)'></td>
+<td id='4-3' onClick='funk(this)'></td>
+<td id='4-4' onClick='funk(this)'></td>
+<td id='4-5' onClick='funk(this)'></td>
+<td id='4-6' onClick='funk(this)'></td>
+<td id='4-7' onClick='funk(this)'></td>
+</tr>
+<tr>
+<td id='5-0' onClick='funk(this)'></td>
+<td id='5-1' onClick='funk(this)'></td>
+<td id='5-2' onClick='funk(this)'></td>
+<td id='5-3' onClick='funk(this)'></td>
+<td id='5-4' onClick='funk(this)'></td>
+<td id='5-5' onClick='funk(this)'></td>
+<td id='5-6' onClick='funk(this)'></td>
+<td id='5-7' onClick='funk(this)'></td>
+</tr>
+<tr>
+<td id='6-0' onClick='funk(this)'></td>
+<td id='6-1' onClick='funk(this)'></td>
+<td id='6-2' onClick='funk(this)'></td>
+<td id='6-3' onClick='funk(this)'></td>
+<td id='6-4' onClick='funk(this)'></td>
+<td id='6-5' onClick='funk(this)'></td>
+<td id='6-6' onClick='funk(this)'></td>
+<td id='6-7' onClick='funk(this)'></td>
+</tr>
+<tr>
+<td id='7-0' onClick='funk(this)'></td>
+<td id='7-1' onClick='funk(this)'></td>
+<td id='7-2' onClick='funk(this)'></td>
+<td id='7-3' onClick='funk(this)'></td>
+<td id='7-4' onClick='funk(this)'></td>
+<td id='7-5' onClick='funk(this)'></td>
+<td id='7-6' onClick='funk(this)'></td>
+<td id='7-7' onClick='funk(this)'></td>
+</tr>
+
+
+
+</table>
+
+<textarea id="koodi" rows="16" cols="100">
+</textarea>
+
+<script type="text/javascript">
+var level = new Array(64);
+level.fill(1);
+level[0] = 0;
+document.getElementById("0-0").style.backgroundColor = "blue";
+console.log(level);
+
+function funk(obj) {
+	var tile = obj.id.split("-");
+	var tilenum = parseInt(tile[0])*8+parseInt(tile[1]);
+	level[tilenum] += 1;
+	if (level[tilenum] > 3)
+	{
+		level[tilenum] = 0;
+	}
+	if (level[tilenum] == 2)
+	{
+		level[tilenum] = 3;
+	}
+	if (level[tilenum] == 0)
+	{
+		document.getElementById(obj.id).innerHTML = "";
+		document.getElementById(obj.id).style.backgroundColor = "blue";
+	}
+	if (level[tilenum] == 1)
+	{
+		document.getElementById(obj.id).innerHTML = "";
+		document.getElementById(obj.id).style.backgroundColor = "white";
+	}
+	if (level[tilenum] == 3)
+	{
+		document.getElementById(obj.id).innerHTML = "X";
+		document.getElementById(obj.id).style.backgroundColor = "green";
+	}
+	
+
+	document.getElementById("koodi").innerHTML = "";
+	var temp = 0;
+	for(var i = 0; i < 64; i++)
+	{
+		if (temp == 0)
+		{
+			var codestr = ".db %";
+		}
+		codestr += padLeft((level[i] >>> 0).toString(2),2);
+		if (temp == 3)
+		{
+			document.getElementById("koodi").innerHTML += codestr+"\n";
+			codestr = "";
+			temp = -1;
+		}
+		temp +=1;
+		
+	}
+
+	
+}
+function padLeft(nr, n, str){
+    return Array(n-String(nr).length+1).join(str||'0')+nr;
+}
+</script>
+
+
+</body>
